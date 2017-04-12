@@ -8,6 +8,6 @@ s.authors = { 'Ghoul' => 'lishengminbj@gmail.com' }
 s.source = { :git => "https://github.com/LiShengmin/GHOKeyboard.git", :tag => s.version.to_s}
 s.requires_arc = true
 s.platform = :ios, '8.0'
-s.source_files = "GHOKeyboard/GHOKeyboard/*.{h,m}"
+s.source_files = "GHOKeyboard/GHOKeyBoard/*.{h,m}"
 s.frameworks = 'UIKit', 'Foundation'
 end
