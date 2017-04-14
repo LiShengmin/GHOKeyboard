@@ -8,6 +8,8 @@
 
 #import "GHOKeyboardSpecialView.h"
 #import "UITextView+Extension.h"
+#import "Masonry/Masonry/Masonry.h"
+#import "Init+Util.h"
 
 @interface GHOKeyboardSpecialView () <UITableViewDelegate, UITableViewDataSource>
 
@@ -74,7 +76,7 @@
 
 - (void)setItermWidthAndTitleWidthWithTitles:(NSArray *)titles itermsAtGroups:(NSArray *)itermsArr {
     CGFloat ViewW = CGRectGetWidth(self.frame);
-    iterm_W_Unit = floor((ViewW-([self maxWidthWithTitles:titles Font:[UIFont font1]]+13))/[self maxItermAtRow:0]);
+    iterm_W_Unit = floor((ViewW-([self maxWidthWithTitles:titles Font:[UIFont systemFontOfSize: 14.0]]+13))/[self maxItermAtRow:0]);
     title_W_Unit = ViewW -iterm_W_Unit*[self maxItermAtRow:0];
 }
 
@@ -116,7 +118,7 @@
 - (NSArray *)itermsWidthWithIterms:(NSArray *)iterms {
     NSMutableArray * itermsWidth = [NSMutableArray array];
     for (NSString * iterm in iterms) {
-        NSInteger itermW = ceil(([UILabel widthWithTitle:iterm font:[UIFont font1]])/iterm_W_Unit);
+        NSInteger itermW = ceil(([UILabel widthWithTitle:iterm font:[UIFont systemFontOfSize: 14.0]])/iterm_W_Unit);
         [itermsWidth addObject:@(itermW)];
     }
     return itermsWidth;
@@ -157,7 +159,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SpeciaViewCell * cell = [SpeciaViewCell cellForTableView:tableView];
     [cell setTitleWithString:self.titles[indexPath.row] size:CGSizeMake(title_W_Unit, [titles_H[indexPath.row] integerValue])];
-    WS(ws);
+    __weak typeof(self) ws = self;
     [cell setItermWithIterms:self.itermsArr[indexPath.row] itermSizeWidth:[self itermsWidthWithItermsWIndex:itermsArr_W[indexPath.row]]];
     [cell setButtonBlcok:^(GHOKeyButtonType type, NSString *text) {
         if (ws.block) {
@@ -255,12 +257,12 @@
 - (void)initizial {
     [self.contentView addSubview:self.titleBtn];
     [self.contentView addSubview:self.collectionView];
-    
+
     [self.titleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.bottom.equalTo(self.contentView).insets(UIEdgeInsetsMake(0, 0, 0, 0));
         make.width.mas_offset(10);
     }];
-    
+
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.bottom.right.equalTo(self.contentView).insets(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
@@ -270,7 +272,7 @@
     if (!_titleBtn) {
         _titleBtn = [[KeyBoardTitleButton alloc] initKeyButtonWithFrame:CGRectMake(0, 0, 50, 50)];
         _titleBtn.type = GHOKeyButtonTypeNomal;
-        WS(ws);
+        __weak typeof(self) ws = self;
         [_titleBtn setButtonClickBlock:^(GHOKeyButtonType buttonType, NSString *text) {
             if ([text isEqualToString:@"常用"]) {
                 ws.block(GHOKeyButtonTypeDel, @"");
@@ -288,7 +290,7 @@
         flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         flowLayout.minimumLineSpacing = 0.00000001;
         flowLayout.minimumInteritemSpacing = 0.0000001;
-        
+
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.userInteractionEnabled = NO;
         _collectionView.scrollEnabled = NO;
@@ -333,9 +335,9 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     SpeciaViewCellIterm * cell = [SpeciaViewCellIterm cellForCollectionview:collectionView indexPath:indexPath];
     [cell initWithTitle:dataSource[indexPath.row] keyButtonType:GHOKeyButtonTypeNomal];
-    
+
     cell.backgroundColor = [UIColor whiteColor];
-    cell.layer.borderColor = [UIColor bonder3Color].CGColor;
+    cell.layer.borderColor = [UIColor blackColor].CGColor;
     cell.layer.borderWidth = 0.5f;
     return cell;
 }
@@ -363,12 +365,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         titleLabel = [UILabel labelWithText:@"" textColor:[UIColor blackColor]];
-        titleLabel.font = [UIFont font1];
+        titleLabel.font = [UIFont systemFontOfSize: 14.0];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:titleLabel];
 //        titleLabel.frame = self.contentView.frame;
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            MAS_MAKE_ZERO(self.contentView);
+            make.top.right.left.bottom.equalTo(self.contentView).insets(UIEdgeInsetsMake(0, 0, 0, 0));
         }];
     }
     return self;

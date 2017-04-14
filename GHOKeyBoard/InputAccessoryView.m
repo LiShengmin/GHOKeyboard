@@ -10,6 +10,7 @@
 #import "GHOKeyboardNumberView.h"
 #import "GHOKeyboardSpecialView.h"
 #import "UITextView+Extension.h"
+#import "Masonry/Masonry/Masonry.h"
 
 #define KEYBOARDBTNTAG (123)
 #define FUNCKEYBTNTAG (322)
@@ -45,8 +46,8 @@
     [systemBtn setImage:[UIImage imageNamed:@"keyboard-system-highlighted"]   forState:UIControlStateHighlighted];
     [systemBtn setImage:[UIImage imageNamed:@"keyboard-system-selected"]        forState:UIControlStateSelected];
     [systemBtn addTarget:self action:@selector(switchKeyboardBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+
+
     UIButton * specialBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     specialBtn.frame = CGRectMake(0, 0, 0, 0);
     specialBtn.tag = 1 + KEYBOARDBTNTAG;
@@ -59,16 +60,16 @@
     [_keyboardBtns addObject:specialBtn];
     [self addSubview:specialBtn];
     [self addSubview:systemBtn];
-    
+
     UILabel * keyboardLine = [[UILabel alloc] init];
     keyboardLine.backgroundColor =[UIColor lightGrayColor];
     [self addSubview:keyboardLine];
-    
+
     [@[specialBtn, systemBtn] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.equalTo(self).insets(UIEdgeInsetsMake(0, 0, 0, 0));
         make.width.mas_offset(150);
     }];
-    
+
     [systemBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(5);
     }];
@@ -80,40 +81,40 @@
         make.width.mas_offset(0.5f);
         make.left.equalTo(specialBtn.mas_right).offset(0);
     }];
-    
-    
-    
+
+
+
     UIButton * clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     clearBtn.frame = CGRectMake(0, 0, 0, 0);
     clearBtn.tag = GHOKeyButtonTypeClear + FUNCKEYBTNTAG;
     [clearBtn setImage:[UIImage imageNamed:@"keyboard-trash"]                  forState:UIControlStateNormal];
     [clearBtn setImage:[UIImage imageNamed:@"keyboard-trash-highlighted"]      forState:UIControlStateHighlighted];
     [clearBtn addTarget:self action:@selector(tapFunctionkeyBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+
+
     UIButton * doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     doneBtn.frame = CGRectMake(0, 0, 0, 0);
     doneBtn.tag = GHOKeyButtonTypeDone + FUNCKEYBTNTAG;
     [doneBtn setImage:[UIImage imageNamed:@"keyboard-done"]                  forState:UIControlStateNormal];
     [doneBtn setImage:[UIImage imageNamed:@"keyboard-done-highlighted"]      forState:UIControlStateHighlighted];
     [doneBtn addTarget:self action:@selector(tapFunctionkeyBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     UIButton * delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     delBtn.frame = CGRectMake(0, 0, 0, 0);
     delBtn.tag = GHOKeyButtonTypeDel + FUNCKEYBTNTAG;
     [delBtn setImage:[UIImage imageNamed:@"keyboard-backspace"]                  forState:UIControlStateNormal];
     [delBtn setImage:[UIImage imageNamed:@"keyboard-backspace-highlighted"]      forState:UIControlStateHighlighted];
     [delBtn addTarget:self action:@selector(tapFunctionkeyBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     [self addSubview:doneBtn];
     [self addSubview:clearBtn];
     [self addSubview:delBtn];
-    
+
     [@[clearBtn, doneBtn, delBtn] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.equalTo(self).insets(UIEdgeInsetsMake(0, 0, 0, 0));
         make.width.mas_offset(100);
     }];
-    
+
     [doneBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(0);
     }];
@@ -158,113 +159,6 @@
 }
 
 - (void)dealloc {
-    
+
 }
 @end
-
-
-
-//- (UIButton *)keyboardBtnWithTitle:(NSString *)title {
-//    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(0, 0, 0, 0);
-//    [btn setTitle:title forState:UIControlStateNormal];
-//    [btn setTitle:title forState:UIControlStateSelected];
-//    [btn setTitleColor:[UIColor bg1Color] forState:UIControlStateNormal];
-//    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-//    [btn setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-//    [btn setBackgroundImage:[UIImage createImageWithColor:[UIColor bg1Color]] forState:UIControlStateSelected];
-//    [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    return btn;
-//}
-
-//    [self addSubview:delteBtn];
-//    [self addSubview:clearBtn];
-//    [self btnAction:systemBtn];
-
-//    /**功能类按钮*/
-//    UIButton * delteBtn  = [self btnWithTitle:@"退格"];
-//    UIButton * clearBtn  = [self btnWithTitle:@"清空"];
-//    [delteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(self.mas_right).offset(-5);
-//    }];
-//    [clearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.equalTo(delteBtn.mas_left).offset(-5);
-//    }];
-
-
-//- (void)setSpecialKeyboardDataWithTitles:(NSArray *)titles groupIterms:(NSArray <NSArray *>*)itermsArr {
-//    _specialTitleArr = titles;
-//    _specialItermsArr = itermsArr;
-//    WS(ws);
-//    _speciaView = [GHOKeyboardSpecialView keyBoardWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [KeyBoardConfig keyBordHeightWithKeyBoardType:GHOKeyBoardTypeCustom])];
-//    _speciaView.delegate = self;
-//    [_speciaView setTitles:_specialTitleArr itermsAtGroups:_specialItermsArr];
-//    [_speciaView setKetBoardBlock:^(GHOKeyButtonType type, NSString *text) {
-//        [ws changeTextView:type Text:text];
-//    }];
-//}
-
-//- (void)changeTextView:(GHOKeyButtonType)type Text:(NSString *)text {
-//    switch (type) {
-//        case GHOKeyButtonTypeDel: {
-//            [self.textView changetext:text];
-//        }
-//            break;
-//
-//        case GHOKeyButtonTypeDone: {
-//            [self.textView resignFirstResponder];
-//        }
-//            break;
-//
-//        case GHOKeyButtonTypeNomal: {
-//            [self.textView changetext:text];
-//        }
-//
-//        case GHOKeyButtonTypeSystem: {
-//        }
-//            break;
-//    }
-//}
-
-//- (void)clickBtnType:(GHOKeyButtonType)buttonType inputText:(NSString *)text {
-//    [self changeTextView:buttonType Text:text];
-//}
-
-//[GHOKeyboardSpecialView keyBoardWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [KeyBoardConfig keyBordHeightWithKeyBoardType:GHOKeyBoardTypeCustom])];
-//- (void)keyBordStateBtnAction:(UIButton *)sender {
-//    sender.selected = !sender.selected;
-//    if (!sender.selected) {
-//        [self textFieldInputView:GHOKeyBoardTypeNumber];
-//    }else {
-//        [self textFieldInputView:GHOKeyBoardTypeSystem];
-//    }
-//}
-
-//- (void)textFieldInputView:(GHOKeyBoardType)keyBoardType {
-//    switch (keyBoardType) {
-//        case GHOKeyBoardTypeNumber:
-//            _textView.inputView = [self inputKeyBoardViewWithRemark:_remark];
-//            [_textView reloadInputViews];
-//            break;
-//        case GHOKeyBoardTypeSystem:
-//            _textView.inputView = nil;
-//            [_textView reloadInputViews];
-//        default:
-//            break;
-//    }
-//}
-//
-//- (UIView *)inputKeyBoardViewWithRemark:(PatientRematk *)remark {
-//    /** 数字键盘 初始化 */
-////    GHOKeyboardNumberView * numberKeyboard = [GHOKeyboardNumberView keyBoardWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [KeyBoardConfig keyBordHeightWithKeyBoardType:GHOKeyBoardTypeNumber])];
-////    WS(ws);
-////    [numberKeyboard setKetBoardBlock:^(GHOKeyButtonType type, NSString *text) {
-////        [ws changeTextView:type Text:text];
-////    }];
-////    return numberKeyboard;
-//
-//    /** 块键盘键盘 初始化 */
-//    WS(ws);
-
-//    return nil;
-//}

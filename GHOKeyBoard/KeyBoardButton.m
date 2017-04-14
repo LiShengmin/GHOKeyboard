@@ -7,6 +7,7 @@
 //
 
 #import "KeyBoardButton.h"
+#import "Masonry/Masonry/Masonry.h"
 
 @interface KeyBoardButton ()
 
@@ -24,10 +25,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor blueColor];
-        self.titleLabel.font = [UIFont font1];
-        [self setTitleColor:[UIColor textBlackColor] forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor bg1Color] forState:UIControlStateHighlighted];
-        [self setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+       self.titleLabel.font = [UIFont systemFontOfSize: 14.0];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+        // [self setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [self addTarget:self action:@selector(keyClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -63,17 +64,17 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        self.titleLabel.font = [UIFont font5];
+        self.titleLabel.font = [UIFont systemFontOfSize: 12.0];
         [self setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [self setTitleColor:[UIColor bg1Color] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        [self setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        // [self setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
         [self addTarget:self action:@selector(keyClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
+
         UILabel * dootLabel = [[UILabel alloc] init];
         [self addSubview:dootLabel];
-        dootLabel.backgroundColor = [UIColor bg1Color];
+        dootLabel.backgroundColor = [UIColor blackColor];
         [dootLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY).offset(0);
             make.left.equalTo(self.mas_left).offset(3);

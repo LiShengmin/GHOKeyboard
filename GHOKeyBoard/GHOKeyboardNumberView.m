@@ -23,22 +23,22 @@ static NSInteger const KeyboardNumberDoneIndex = 11;
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    
+
     int row = 4;
     int column = 3;
-    
+
     CGFloat keyWidth = frame.size.width / column;
     CGFloat keyHeight = frame.size.height / row;
     CGFloat keyX = 0;
     CGFloat keyY = 0;
-    
+
     NSMutableArray *array = [NSMutableArray array];
     for (int i = 0; i < KeyboardNumberKeyCount; i++) {
         KeyBoardButton *button = [KeyBoardButton keyButtonWithFrame:CGRectMake(keyX, keyY, keyWidth, keyHeight)];
         [self addSubview:button];
-        WS(weakSelf);
+        // WS(weakSelf);
         [button setButtonClickBlock:^(GHOKeyButtonType buttonType, NSString *text) {
-            weakSelf.block(buttonType, text);
+            self.block(buttonType, text);
         }];
         [array addObject:button];
         if (i == KeyboardNumberDelIndex) {
@@ -50,16 +50,16 @@ static NSInteger const KeyboardNumberDoneIndex = 11;
         } else {
             button.type = GHOKeyButtonTypeNomal;
         }
-        
+
         keyX += keyWidth;
-        
+
         if ((i + 1) % column == 0) {
             keyX = 0;
             keyY += keyHeight;
         }
     }
     self.numberKeys = array;
-    
+
     // 水平分隔线
     CGFloat viewX = 0;
     CGFloat viewY = 0;
@@ -67,12 +67,12 @@ static NSInteger const KeyboardNumberDoneIndex = 11;
     CGFloat viewH = 0.5;
     for (int i = 0; i < row; i++) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(viewX, viewY, viewW, viewH)];
-        view.backgroundColor = [UIColor colorWithHexs:@"#dfdfdf"];
+        // view.backgroundColor = [UIColor colorWithHexs:@"#dfdfdf"];
         [self addSubview:view];
-        
+
         viewY += keyHeight;
     }
-    
+
     // 垂直分隔线
     viewX = keyWidth;
     viewY = 0;
@@ -80,26 +80,26 @@ static NSInteger const KeyboardNumberDoneIndex = 11;
     viewH = frame.size.height;
     for (int i = 0; i < column - 1; i++) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(viewX, viewY, viewW, viewH)];
-        view.backgroundColor = [UIColor colorWithHexs:@"#dfdfdf"];
+        // view.backgroundColor = [UIColor colorWithHexs:@"#dfdfdf"];
         [self addSubview:view];
-        
+
         viewX += keyWidth;
     }
 }
 
 - (void)exchangeNumber {
     NSMutableArray *numbers = [NSMutableArray array];
-    
+
     int startNum = 0;
     int length = 10;
-    
+
     for (int i = startNum; i < length; i++) {
         [numbers addObject:[NSString stringWithFormat:@"%d", i]];
     }
-    
+
     for (int i = 0; i < self.numberKeys.count; i++) {
         KeyBoardButton *button = self.numberKeys[i];
-        
+
         if (i == KeyboardNumberDelIndex) {
             [button setTitle:[KeyBoardConfig deleteButtonTextWithKeyBoardType:GHOKeyBoardTypeNumber] forState:UIControlStateNormal];
             continue;
@@ -107,10 +107,10 @@ static NSInteger const KeyboardNumberDoneIndex = 11;
             [button setTitle:[KeyBoardConfig doneButtonTextWithKeyBoardType:GHOKeyBoardTypeNumber] forState:UIControlStateNormal];
             continue;
         }
-        
+
         int index = arc4random() % numbers.count;
         [button setTitle:numbers[index] forState:UIControlStateNormal];
-        
+
         [numbers removeObjectAtIndex:index];
     }
 }
