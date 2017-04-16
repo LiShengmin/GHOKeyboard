@@ -10,7 +10,7 @@
 #import "GHOKeyboardNumberView.h"
 #import "GHOKeyboardSpecialView.h"
 #import "UITextView+Extension.h"
-#import "Masonry/Masonry/Masonry.h"
+#import <Masonry/Masonry.h>
 
 #define KEYBOARDBTNTAG (123)
 #define FUNCKEYBTNTAG (322)

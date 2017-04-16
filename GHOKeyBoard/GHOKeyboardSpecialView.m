@@ -8,7 +8,7 @@
 
 #import "GHOKeyboardSpecialView.h"
 #import "UITextView+Extension.h"
-#import "Masonry/Masonry/Masonry.h"
+#import <Masonry/Masonry.h>
 #import "Init+Util.h"
 
 @interface GHOKeyboardSpecialView () <UITableViewDelegate, UITableViewDataSource>
