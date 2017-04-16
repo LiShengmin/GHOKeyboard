@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'GHOKeyBoard'
-s.version = '0.1.0'
+s.version = '0.1.1'
 s.license = { :type =>"MIT", :file => "LICENSE"}
 s.summary = 'OC，自定义数字键盘和中文块键盘'
 s.homepage = 'https://github.com/lishengmin/GHOKeyboard'
